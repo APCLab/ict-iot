@@ -33,19 +33,59 @@
 \end{frame}
 
 
-\begin{frame}{prepare}
-  \begin{center}
-    \Large
-    先在有網路的時候準備
-  \end{center}
+\section{Env setup}
 
+\begin{frame}{Env setup}
   \begin{itemize}
-    \item \url{https://github.com/APCLab/ict-iot}
+    \item code \& slide: \url{https://github.com/APCLab/ict-iot}
 
-    \item \url{https://pypi.python.org/pypi/requests}
+    \item *Windows only* \url{https://support.apple.com/kb/DL999?viewlocale=en_US&locale=en_US}
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Config Arduino IDE}
+  Arduino 安裝 Linkit 的 Plugin
+
+  > Perference
+
+  \url{http://download.labs.mediatek.com/package_mtk_linkit_smart_7688_test_index.json}
+\end{frame}
+
+\begin{frame}[fragile]{Config Linkit}
+  \Large
+  \begin{itemize}
+    \item 預設 Linkit 會作為一個 AP，可共連線
+
+    \item 第一次 login 時，使用 \verb|mylinkit.local| 連線
+
+    \item 先改密碼！
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Config Linkit Hostname}
+  \Large
+  \begin{center}
+    改一下 hostname，避免大家用相同的
+  \end{center}
+
+  \includegraphics[scale=0.25]{./img/hostname.png}
+
+  \begin{center}
+    我的是 \verb`iblinkit`
+
+    之後使用 \verb`iblinkit.local` 連線
+  \end{center}
+\end{frame}
+
+\begin{frame}{Config Linkit Network}
+  \Large
+  \begin{center}
+    最後回來改掉 AP mode
+
+    換成 station mode 以連上其他 wifi AP
+    \includegraphics[scale=0.3]{./img/connect_wifi.png}
+  \end{center}
+\end{frame}
 
 \section{Linkit}
 
@@ -56,12 +96,9 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{config Arduino IDE}
-  Arduino 安裝 Linkit 的 Plugin
-
-  > Perference
-
-  \url{http://download.labs.mediatek.com/package_mtk_linkit_smart_7688_test_index.json}
+\begin{frame}[fragile]{Burn code}
+  \Huge
+  copy out the folder \verb|linkit-7688-duo/dht22|
 \end{frame}
 
 
@@ -115,11 +152,9 @@
 
 \begin{frame}{appmate}
   \begin{itemize}
-    \item check \url{http://localhost:8000/}
+    \item check \url{http://tz.firc.tw:4000/}
 
-    \item check \url{http://localhost:8000/api/}
-
-    \item check \url{http://localhost:8000/admin/}
+    \item check \url{http://tz.firc.tw:4000/major/}
   \end{itemize}
 \end{frame}
 
