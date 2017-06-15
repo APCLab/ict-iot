@@ -1,0 +1,126 @@
+\documentclass{beamer}
+
+\usetheme{Warsaw}
+\useoutertheme {miniframes}
+
+\usepackage{xeCJK}
+\setCJKmainfont{HanWangWCL06}
+
+\begin{document}
+
+\title[Linkit 7688 Duo Tutorial]{Linkit 7688 Duo Tutorial}
+
+\author{Iblis Lin}
+
+\date{2017/6/16}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\section{Big Picture}
+
+\begin{frame}{Big Picture}
+  \begin{center}
+    \Huge
+    把溫溼度 sensor data \\
+    \uncover<2->{用 Linkit 讀出後，\\}
+    \uncover<4->{透過網路，\\}
+    \uncover<3->{塞進資料庫，\\}
+    顯示在手機上
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{prepare}
+  \begin{center}
+    \Large
+    先在有網路的時候準備
+  \end{center}
+
+  \begin{itemize}
+    \item \url{https://github.com/APCLab/ict-iot}
+
+    \item \url{https://pypi.python.org/pypi/requests}
+  \end{itemize}
+\end{frame}
+
+
+\section{Linkit}
+
+\begin{frame}
+  \begin{center}
+    \Huge
+    Linkit 讀取 sensor data
+  \end{center}
+\end{frame}
+
+\begin{frame}{config Arduino IDE}
+  Arduino 安裝 Linkit 的 Plugin
+
+  > Perference
+
+  \url{http://download.labs.mediatek.com/package_mtk_linkit_smart_7688_test_index.json}
+\end{frame}
+
+
+\section{appmate}
+
+\begin{frame}{appmate overview}
+  \Large
+
+  \begin{itemize}
+    \item 簡單的 Web application
+
+    \item Django project
+
+    \item 所以是使用 Python
+
+    \item 提供 與 database 互動的 http API
+
+    \item API 採用 REST design
+
+    \item 我們把它設計成 template project
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{appmate setup}
+
+  建立 database, 這裡預設是使用 SQLite
+  \begin{block}{code}
+  \begin{verbatim}
+    python ./maange.py migrate
+  \end{verbatim}
+  \end{block}
+
+  建立 Django 後臺的 admin user
+  \begin{block}{code}
+  \begin{verbatim}
+    python ./manage.py createsuperuser
+  \end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{appmate setup}
+  Run the server!
+  \begin{block}{code}
+  \begin{verbatim}
+    python ./manage.py runserver
+  \end{verbatim}
+  \end{block}
+
+  並且仔細看看畫面上的訊息
+\end{frame}
+
+\begin{frame}{appmate}
+  \begin{itemize}
+    \item check \url{http://localhost:8000/}
+
+    \item check \url{http://localhost:8000/api/}
+
+    \item check \url{http://localhost:8000/admin/}
+  \end{itemize}
+\end{frame}
+
+\end{document}
