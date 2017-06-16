@@ -13,7 +13,7 @@ sys.path.insert(0, '/usr/lib/python2.7/bridge/')
 from bridgeclient import BridgeClient as bridgeclient
 
 ID = 1
-API_URL = 'http://lbp.firc.tw:3000/iot/{id}/'.format(ID)
+API_URL = 'http://lbp.firc.tw:3000/iot/{}/'.format(ID)
 
 
 def main():
@@ -28,8 +28,8 @@ def main():
             'humi': float(h),
             'temp': float(t),
         }
-        r = requests.post(API_URL, json=payload)
-        assert r.status_code == 201, r.status_code
+        r = requests.put(API_URL, json=payload)
+        assert r.status_code == 200
 
         print(h, t)
 
