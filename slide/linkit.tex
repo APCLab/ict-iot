@@ -43,14 +43,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Config Arduino IDE}
-  Arduino 安裝 Linkit 的 Plugin
-
-  > Perference
-
-  \url{http://download.labs.mediatek.com/package_mtk_linkit_smart_7688_test_index.json}
-\end{frame}
-
 \begin{frame}[fragile]{Config Linkit}
   \Large
   \begin{itemize}
@@ -87,18 +79,142 @@
   \end{center}
 \end{frame}
 
+\begin{frame}{Config Arduino IDE}
+  \Large
+  Arduino 安裝 Linkit 的 Plugin
+
+  > Perference
+
+  \small
+  \url{http://download.labs.mediatek.com/package_mtk_linkit_smart_7688_test_index.json}
+\end{frame}
+
+
 \section{Linkit}
 
 \begin{frame}
   \begin{center}
     \Huge
     Linkit 讀取 sensor data
+
+    \small
+    ref:
+    \url{https://goo.gl/eEHc18}
   \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Burn code}
+\begin{frame}[fragile]{Linkit Patch}
+  \begin{center}
+    \large
+    剛好我們手上的 Linkit 裡面的軟體有 Bug
+
+    走 ssh 連進去改 code
+  \end{center}
+
+  \includegraphics[scale=0.215]{./img/ssh.png}
+\end{frame}
+
+\begin{frame}{Linkit Patch}
   \Huge
-  copy out the folder \verb|linkit-7688-duo/dht22|
+  我們連上的是 Linux
+
+  名為 OpenWrt 的 distribution
+\end{frame}
+
+\begin{frame}[fragile]{Linkit Patch}
+  \tiny
+  \begin{verbatim}
+    vi /usr/bin/run-avrdude
+
+    -avrdude -c linuxgpio -C /etc/avrdude.conf -p m32u4 -U flash:w:/etc/arduino/Caterina-smart7688.hex -Uflash:w:$1 $2
+    +avrdude -c linuxgpio -C /etc/avrdude.conf -p m32u4 -e -v -Uflash:w:$1 $2
+  \end{verbatim}
+
+  \begin{center}
+    \small
+    patch: \url{https://goo.gl/xr8hpu}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Linkit Config}
+  \begin{center}
+    \large
+    打開 bridge 的功能
+
+    MCU <--> CPU
+
+    \begin{verbatim}
+      uci set yunbridge.config.disabled='0'
+      uci commit
+      reboot
+    \end{verbatim}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Plugin sensor}
+  \Large
+  \begin{itemize}
+    \item 這次的 溫溼度計 是 analogy sensor
+    \item 型號: DHT22
+    \item 接在開發板的 \verb`A0`
+    \item 接電腦的 usb 選下面那個孔
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Burn code}
+  \huge
+  \begin{center}
+    Sample code:
+
+    \verb`linkit-7688-duo/dht22`
+
+    reference: \url{https://goo.gl/deMXpU}
+  \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{Python bridge}
+  \Large
+  把 Python code 丟上去跑
+
+  Sample code: \verb`linkit-7688-duo/dht22/py`
+
+  丟上去： \verb`scp -r linkit-7688-duo/dht22/py root@iblinkit.local:~`
+\end{frame}
+
+\begin{frame}[fragile]{Python bridge}
+  \begin{center}
+    \Large
+    \begin{verbatim}
+      python py/basic.py
+    \end{verbatim}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Python send to DataBase}
+  \Large
+  我們需要額外的套件處理 Http request
+
+  \begin{verbatim}
+    pip install requests
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Python send to DataBase}
+  \Large
+  \begin{itemize}
+    \item 再去 \url{http://lbp.firc.tw:3000/iot/} 開個新的表格
+
+    \item 記下我們的 id
+
+    \item 改一下 \verb`py/to_db.py` 裡面的 id, 不要改到別人的
+  \end{itemize}
+
+
+  Run!
+  \begin{verbatim}
+    python py/to_db.py
+  \end{verbatim}
 \end{frame}
 
 
