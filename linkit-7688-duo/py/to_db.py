@@ -12,24 +12,23 @@ sys.path.insert(0, '/usr/lib/python2.7/bridge/')
 
 from bridgeclient import BridgeClient as bridgeclient
 
-BASE_URL = 'http://tz.firc.tw:4000/major/'
+ID = 1
+API_URL = 'http://lbp.firc.tw:3000/iot/{id}/'.format(ID)
 
 
 def main():
     value = bridgeclient()
 
     while True:
-        t = value.get("t")
-        h = value.get("h")
+        t = value.get('t')
+        h = value.get('h')
 
         payload = {
-            'char32': socket.gethostname(),
-            'int1': int(time()),  # timestamp
-            'float1': float(h),
-            'float2': float(t),
-            'text': "h, t",
+            'hostname': socket.gethostname(),
+            'humi': float(h),
+            'temp': float(t),
         }
-        r = requests.post(BASE_URL, auth=('demo', 'demo'), json=payload)
+        r = requests.post(API_URL, json=payload)
         assert r.status_code == 201, r.status_code
 
         print(h, t)

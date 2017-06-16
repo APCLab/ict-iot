@@ -12,8 +12,8 @@ def main():
     value = bridgeclient()
 
     while True:
-        t = value.get("t")
-        h = value.get("h")
+        t = value.get('t')
+        h = value.get('h')
         print(h, t)
 
 
